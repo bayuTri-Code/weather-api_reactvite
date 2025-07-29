@@ -52,7 +52,7 @@ const Weather = () => {
     }
 
     useEffect(()=>{
-        search("London");
+        search("Jakarta");
     },[]);
   return (
     <div className="weather">
@@ -60,21 +60,21 @@ const Weather = () => {
         <input type="text" placeholder="Search" />
         <img src={searchIcon} alt="" />
       </div>
-      <img src={clearIcon} className="weather-icon" alt="" />
-      <p className="temperature">16°c</p>
-      <p className="location">London</p>
+      <img src={weatherData.icon} className="weather-icon" alt="" />
+      <p className="temperature">{weatherData.temperature}°c</p>
+      <p className="location">{weatherData.location}</p>
       <div className="weather-data">
         <div className="col">
             <img src={humidityIcon} alt="" />
             <div>
-                <p>91 %</p>
+                <p>{weatherData.humidity} %</p>
                 <span>Humidity</span>
             </div>
         </div>
         <div className="col">
             <img src={windIcon} alt="" />
             <div>
-                <p>3.6 km/h</p>
+                <p>{weatherData.windSpeed} km/h</p>
                 <span>Wind Speed</span>
             </div>
         </div>
