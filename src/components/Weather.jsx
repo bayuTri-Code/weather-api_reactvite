@@ -32,12 +32,22 @@ const Weather = () => {
     }
 
     const search = async (city)=>{
+        if(city === ""){
+            alert("Please enter a city name");
+            return;
+        }
         try {
             const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${import.meta.env.VITE_API_ID}`;
 
             const response = await fetch(url);
             const data = await response.json();
             console.log(data);
+
+            if(!response.ok) {
+                alert(data.message);
+                return;
+            }
+
             const icon = allIcon[data.weather[0].icon];
             setWeatherData({
                 humidity: data.main.humidity,
@@ -47,13 +57,13 @@ const Weather = () => {
                 icon: icon,
             });
         } catch (error) {
-            alert("City not found");
+            setWeatherData(false);
             console.error("Error fetching weather data:", error);
         }
     }
 
     useEffect(()=>{
-        search("Jakarta");
+        search("");
     },[]);
   return (
     <div className="weather">
@@ -61,6 +71,9 @@ const Weather = () => {
         <input ref={inputCity} type="text" placeholder="Search" />
         <img src={searchIcon} alt="" onClick={()=>search(inputCity.current.value)} />
       </div>
+      {weatherData?<>
+      
+      
       <img src={weatherData.icon} className="weather-icon" alt="" />
       <p className="temperature">{weatherData.temperature}°c</p>
       <p className="location">{weatherData.location}</p>
@@ -80,6 +93,7 @@ const Weather = () => {
             </div>
         </div>
       </div>
+    </>:<></>}  
     </div>
   );
 };
